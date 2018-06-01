@@ -9,6 +9,8 @@ public class Student extends Thread implements Person{
 	private String firstName;
 	private String lastName;
 	private int vouchers;
+	private int minReactionTime = 1500; // 1000 = 1 second
+	private int maxReactionTime = 3500;
 	
 	public int getVouchers() {
 		return vouchers;
@@ -52,7 +54,7 @@ public class Student extends Thread implements Person{
 		}
 	}
 	
-	public synchronized void checkForVouchers() {
+	public void checkForVouchers() {
 		if (Billboard.isVoucherPlaced()) {
 			takeVoucher();
 		} else {
@@ -60,21 +62,23 @@ public class Student extends Thread implements Person{
 		}
 	}
 	
-	public void takeVoucher() {
+	public synchronized void takeVoucher() {
 		this.vouchers++;
+		
 		System.out.println("[STUDENT] " + this.getFirstName() + " " +
-		this.getLastName() + " takes the voucher.");
-		System.out.println("[STUDENT] " + this.getFirstName() + " " + this.getLastName() +
-		" now has " + this.getVouchers() + " voucher(s).");
+		this.getLastName() + " takes a voucher. He now has " + this.getVouchers()
+		+ " voucher(s).");
+		
 		if (Billboard.getVoucherQuantity() > 0) {
 			Billboard.setVoucherQuantity(Billboard.getVoucherQuantity() - 1);
 			if (Billboard.getVoucherQuantity() == 0) {
 				Billboard.setVoucherPlaced(false);
+				System.out.println();
 			}
 		}
 	}
 	
 	public int react() {
-		return r.nextInt(3500-2000) + 500;
+		return r.nextInt(maxReactionTime - minReactionTime) + minReactionTime;
 	}
 }

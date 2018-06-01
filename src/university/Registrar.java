@@ -5,6 +5,10 @@ public class Registrar extends Thread implements Person{
 	private static int tempQuantity;
 	static Random r = new Random();
 	private Billboard billboard;
+	private int minReactionTime = 1000; // 1000 = 1 second
+	private int maxReactionTime = 5000;
+	private static int minRandomVoucher = 1;
+	private static int maxRandomVoucher = 5;
 	
 	public Registrar(Billboard billboard) {
 		this.billboard = billboard;
@@ -26,14 +30,16 @@ public class Registrar extends Thread implements Person{
 		}
 	}
 	public static void placeVoucher() {
-		tempQuantity = r.nextInt(5 - 1) + 1;
+		tempQuantity = r.nextInt(maxRandomVoucher - minRandomVoucher) + minRandomVoucher;
+		
 		System.out.println("[REGISTRAR] The Registrar has placed " +
 		tempQuantity +  " voucher(s) on the billboard.");
+		
 		Billboard.setVoucherQuantity(tempQuantity);
 		Billboard.setVoucherPlaced(true);
 	}
 
 	public int react() {
-		return r.nextInt(5000-1000) + 1000;
+		return r.nextInt(maxReactionTime-minReactionTime) + minReactionTime;
 	}
 }
