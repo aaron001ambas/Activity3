@@ -2,7 +2,7 @@ package university;
 import java.util.Random;
 
 public class Student extends Thread implements Person{
-	Random r = new Random();
+	static Random r = new Random();
 	
 	private Billboard billboard;
 	private String studentID;
@@ -44,7 +44,7 @@ public class Student extends Thread implements Person{
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(r.nextInt(1000-250) + 250);
+				Thread.sleep(react());
 				checkForVouchers();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -65,7 +65,16 @@ public class Student extends Thread implements Person{
 		System.out.println("[STUDENT] " + this.getFirstName() + " " +
 		this.getLastName() + " takes the voucher.");
 		System.out.println("[STUDENT] " + this.getFirstName() + " " + this.getLastName() +
-		" has " + this.getVouchers() + " voucher(s).");
-		Billboard.setVoucherPlaced(false);
+		" now has " + this.getVouchers() + " voucher(s).");
+		if (Billboard.getVoucherQuantity() > 0) {
+			Billboard.setVoucherQuantity(Billboard.getVoucherQuantity() - 1);
+			if (Billboard.getVoucherQuantity() == 0) {
+				Billboard.setVoucherPlaced(false);
+			}
+		}
+	}
+	
+	public int react() {
+		return r.nextInt(3500-2000) + 500;
 	}
 }
