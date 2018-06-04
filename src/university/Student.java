@@ -9,7 +9,7 @@ public class Student extends Thread implements Person{
 	private String firstName;
 	private String lastName;
 	private int vouchers;
-	private int minReactionTime = 1500; // 1000 = 1 second
+	private int minReactionTime = 1000; // 1000 = 1 second
 	private int maxReactionTime = 3500;
 	
 	public int getVouchers() {
@@ -73,7 +73,7 @@ public class Student extends Thread implements Person{
 			Billboard.setVoucherQuantity(Billboard.getVoucherQuantity() - 1);
 			if (Billboard.getVoucherQuantity() == 0) {
 				Billboard.setVoucherPlaced(false);
-				System.out.println();
+				System.out.println("[STATUS] The billboard has run out of vouchers!\n");
 			}
 		}
 	}

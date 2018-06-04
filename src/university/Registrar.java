@@ -6,7 +6,7 @@ public class Registrar extends Thread implements Person{
 	static Random r = new Random();
 	private Billboard billboard;
 	private int minReactionTime = 1000; // 1000 = 1 second
-	private int maxReactionTime = 5000;
+	private int maxReactionTime = 4250;
 	private static int minRandomVoucher = 1;
 	private static int maxRandomVoucher = 5;
 	
